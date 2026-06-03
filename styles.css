@@ -1,1 +1,23 @@
 /*  your css code here. If applicable */
+#button
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* border: 2px solid; */
+    .btns
+    {
+        height: 50px;
+        /* width: 50px; */
+        background-color: white;
+        /* border-collapse: collapse; */
+        font-size: 25px;
+        /* border: none; */
+    }
+}
+
+#input
+{
+    height: 40px;
+    width: 100%;
+    border: none;
+}
