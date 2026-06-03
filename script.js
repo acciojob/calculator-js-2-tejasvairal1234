@@ -1,12 +1,12 @@
-const display = document.getElementById("display");
+const displayBox = document.getElementById("display");
 
 let expression = "";
 
 function updateDisplay() {
-  display.textContent = expression;
+  displayBox.textContent = expression;
 }
 
-const valueMap = {
+const values = {
   "0": "0",
   "1": "1",
   "2": "2",
@@ -17,20 +17,24 @@ const valueMap = {
   "7": "7",
   "8": "8",
   "9": "9",
-  plus: "+",
+  "plus": "+",
   "-": "-",
-  divi: "/",
-  multi: "*",
-  dot: ".",
-  op: "(",
-  cl: ")"
+  "divi": "/",
+  "multi": "*",
+  "dot": ".",
+  "op": "(",
+  "cl": ")"
 };
 
-Object.keys(valueMap).forEach((id) => {
-  document.getElementById(id).addEventListener("click", () => {
-    expression += valueMap[id];
-    updateDisplay();
-  });
+Object.keys(values).forEach((id) => {
+  const btn = document.getElementById(id);
+
+  if (btn) {
+    btn.addEventListener("click", () => {
+      expression += values[id];
+      updateDisplay();
+    });
+  }
 });
 
 document.getElementById("C").addEventListener("click", () => {
@@ -45,10 +49,11 @@ document.getElementById("back").addEventListener("click", () => {
 
 document.getElementById("equal").addEventListener("click", () => {
   try {
-    if (expression.trim() === "") {
-      display.textContent = "Error";
-      expression = "";
-      return;
+    if (
+      expression === "" ||
+      /[+\-*/.]$/.test(expression)
+    ) {
+      throw new Error();
     }
 
     const result = eval(expression);
@@ -58,15 +63,13 @@ document.getElementById("equal").addEventListener("click", () => {
       result === -Infinity ||
       Number.isNaN(result)
     ) {
-      display.textContent = "Error";
-      expression = "";
-      return;
+      throw new Error();
     }
 
-    expression = result.toString();
-    display.textContent = expression;
+    expression = String(result);
+    displayBox.textContent = expression;
   } catch (e) {
-    display.textContent = "Error";
     expression = "";
+    displayBox.textContent = "Error";
   }
 });
