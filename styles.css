@@ -1,23 +1,26 @@
-/*  your css code here. If applicable */
-#button
-{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* border: 2px solid; */
-    .btns
-    {
-        height: 50px;
-        /* width: 50px; */
-        background-color: white;
-        /* border-collapse: collapse; */
-        font-size: 25px;
-        /* border: none; */
-    }
+#calculator {
+  width: 300px;
+  margin: 30px auto;
 }
 
-#input
-{
-    height: 40px;
-    width: 100%;
-    border: none;
+#display {
+  height: 50px;
+  border: 1px solid #000;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 24px;
+  text-align: right;
+  overflow: hidden;
+}
+
+#button {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+#button button {
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
 }

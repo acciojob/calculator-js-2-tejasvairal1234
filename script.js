@@ -1,35 +1,72 @@
-//your JS code here. If required.
-const input = document.getElementById("input");
-const btn = document.querySelectorAll(".btn");
-const button = document.getElementById("button");
-const clear = document.getElementById("clear");
-const back = document.getElementById("back");
-const solution = document.getElementById("final");
-let exprestion = "";
+const display = document.getElementById("display");
 
-btn.forEach((v) =>
-{
-  v.addEventListener("click", (e) =>
-  {
-    exprestion += e.target.innerText;
-    input.value = exprestion;
+let expression = "";
+
+function updateDisplay() {
+  display.textContent = expression;
+}
+
+const valueMap = {
+  "0": "0",
+  "1": "1",
+  "2": "2",
+  "3": "3",
+  "4": "4",
+  "5": "5",
+  "6": "6",
+  "7": "7",
+  "8": "8",
+  "9": "9",
+  plus: "+",
+  "-": "-",
+  divi: "/",
+  multi: "*",
+  dot: ".",
+  op: "(",
+  cl: ")"
+};
+
+Object.keys(valueMap).forEach((id) => {
+  document.getElementById(id).addEventListener("click", () => {
+    expression += valueMap[id];
+    updateDisplay();
   });
 });
 
-clear.addEventListener("click", () =>
-{
-  exprestion = "";
-  input.value=exprestion;
+document.getElementById("C").addEventListener("click", () => {
+  expression = "";
+  updateDisplay();
 });
 
-back.addEventListener("click", () =>
-{
-  exprestion = exprestion.slice(0,exprestion.length - 1);
-  input.value = exprestion;
+document.getElementById("back").addEventListener("click", () => {
+  expression = expression.slice(0, -1);
+  updateDisplay();
 });
 
-solution.addEventListener("click", () =>
-{
-  exprestion = eval(exprestion);
-  input.value=exprestion;
+document.getElementById("equal").addEventListener("click", () => {
+  try {
+    if (expression.trim() === "") {
+      display.textContent = "Error";
+      expression = "";
+      return;
+    }
+
+    const result = eval(expression);
+
+    if (
+      result === Infinity ||
+      result === -Infinity ||
+      Number.isNaN(result)
+    ) {
+      display.textContent = "Error";
+      expression = "";
+      return;
+    }
+
+    expression = result.toString();
+    display.textContent = expression;
+  } catch (e) {
+    display.textContent = "Error";
+    expression = "";
+  }
 });
